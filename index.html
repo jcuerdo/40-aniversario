@@ -1,1 +1,845 @@
-<h1> 40 Cumpleaños </h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Felices 40! David & Sandra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --gold:      #c9a257;
+      --gold-light:#e8c97a;
+      --gold-dark: #8a6d35;
+      --dark:      #0b0d10;
+      --dark2:     #111418;
+      --dark3:     #181c22;
+      --text:      #d8cfc4;
+      --text-muted:#7a7068;
+      --white:     #f5f0ea;
+      --accent:    #3a7ca5;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── Canvas de partículas ──────────────────────────────────────── */
+    #particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Hero ──────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,162,87,.13) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(58,124,165,.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-age {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(7rem, 22vw, 18rem);
+      font-weight: 300;
+      line-height: .85;
+      background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-light) 50%, var(--gold-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -.03em;
+      animation: fadeDown .9s ease both;
+      user-select: none;
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 2.6rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold-light);
+      letter-spacing: .12em;
+      margin-top: .4rem;
+      animation: fadeDown .9s .15s ease both;
+      opacity: 0;
+    }
+
+    .hero-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 4.4rem);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: .06em;
+      margin-top: 1.8rem;
+      animation: fadeDown .9s .3s ease both;
+      opacity: 0;
+    }
+
+    .hero-names span {
+      color: var(--gold);
+    }
+
+    .hero-divider {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto;
+      animation: fadeIn 1s .5s ease both;
+      opacity: 0;
+    }
+
+    .hero-intro {
+      max-width: 560px;
+      font-size: .95rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text);
+      animation: fadeIn 1s .65s ease both;
+      opacity: 0;
+      letter-spacing: .04em;
+    }
+
+    .scroll-cta {
+      margin-top: 3.5rem;
+      animation: fadeIn 1s .8s ease both;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      cursor: pointer;
+    }
+
+    .scroll-cta span {
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .scroll-arrow {
+      width: 22px;
+      height: 22px;
+      border-right: 1px solid var(--gold);
+      border-bottom: 1px solid var(--gold);
+      transform: rotate(45deg);
+      animation: bounce 1.8s infinite;
+    }
+
+    /* ─── Secciones genéricas ───────────────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: .72rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.15;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* ─── El Regalo ─────────────────────────────────────────────────── */
+    .gift-section {
+      background: var(--dark2);
+    }
+
+    .gift-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .gift-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .gift-text p {
+      font-size: .92rem;
+      line-height: 1.9;
+      color: var(--text);
+      font-weight: 300;
+      margin-top: 1.4rem;
+    }
+
+    .gift-card {
+      background: linear-gradient(135deg, rgba(201,162,87,.1), rgba(201,162,87,.03));
+      border: 1px solid rgba(201,162,87,.25);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gift-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(201,162,87,.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .gift-card-icon {
+      font-size: 2.8rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .gift-card-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      line-height: 1.1;
+    }
+
+    .gift-card-detail {
+      font-size: .82rem;
+      color: var(--text-muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: .4rem;
+    }
+
+    .gift-card-sep {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.4rem 0;
+      opacity: .5;
+    }
+
+    .gift-card-hotel {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+    }
+
+    .gift-card-badge {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: .35rem 1rem;
+      border: 1px solid rgba(201,162,87,.4);
+      border-radius: 100px;
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ─── Hotel ─────────────────────────────────────────────────────── */
+    .hotel-section {
+      background: var(--dark);
+    }
+
+    .hotel-photo-wrap {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      margin-top: 3.5rem;
+      height: 480px;
+      box-shadow: 0 40px 80px rgba(0,0,0,.6);
+    }
+
+    .hotel-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 8s ease;
+    }
+
+    .hotel-photo-wrap:hover img {
+      transform: scale(1.04);
+    }
+
+    .hotel-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,13,16,.85) 0%, transparent 60%);
+    }
+
+    .hotel-photo-caption {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      right: 2rem;
+    }
+
+    .hotel-photo-caption h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--white);
+    }
+
+    .hotel-photo-caption p {
+      font-size: .8rem;
+      color: rgba(245,240,234,.6);
+      letter-spacing: .1em;
+      margin-top: .3rem;
+    }
+
+    .hotel-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .hotel-feature {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .hotel-feature-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: .8rem;
+    }
+
+    .hotel-feature-title {
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .4rem;
+    }
+
+    .hotel-feature-desc {
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── Fotos ─────────────────────────────────────────────────────── */
+    .photos-section {
+      background: var(--dark2);
+    }
+
+    .photos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .photos-grid { grid-template-columns: 1fr; }
+    }
+
+    .photo-card {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,.06);
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: border-color .3s, transform .3s;
+    }
+
+    .photo-card:hover {
+      border-color: rgba(201,162,87,.35);
+      transform: translateY(-4px);
+    }
+
+    .photo-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ─── Quiénes somos ──────────────────────────────────────────────── */
+    .crew-section {
+      background: var(--dark);
+    }
+
+    .crew-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 3.5rem;
+    }
+
+    .crew-chip {
+      padding: .7rem 1.6rem;
+      border: 1px solid rgba(201,162,87,.3);
+      border-radius: 100px;
+      font-size: .85rem;
+      letter-spacing: .06em;
+      color: var(--text);
+      background: rgba(201,162,87,.05);
+      transition: background .3s, border-color .3s, color .3s;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .crew-chip:hover {
+      background: rgba(201,162,87,.12);
+      border-color: var(--gold);
+      color: var(--white);
+    }
+
+    .crew-chip.special {
+      border-color: rgba(201,162,87,.6);
+      background: rgba(201,162,87,.1);
+      color: var(--gold-light);
+    }
+
+    .crew-note {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: .85rem;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    /* ─── Footer ─────────────────────────────────────────────────────── */
+    footer {
+      background: var(--dark2);
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-heart {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 1rem;
+      animation: heartbeat 2s infinite;
+    }
+
+    .footer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--gold-light);
+      font-style: italic;
+    }
+
+    .footer-from {
+      margin-top: 1rem;
+      font-size: .82rem;
+      color: var(--text-muted);
+      letter-spacing: .12em;
+    }
+
+    .footer-line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.8rem auto;
+    }
+
+    .footer-copy {
+      font-size: .72rem;
+      color: rgba(122,112,104,.5);
+      letter-spacing: .1em;
+    }
+
+    /* ─── Animations ──────────────────────────────────────────────────── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50%       { transform: rotate(45deg) translateY(6px); }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14%       { transform: scale(1.15); }
+      28%       { transform: scale(1); }
+      42%       { transform: scale(1.1); }
+      56%       { transform: scale(1); }
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+
+    /* ─── Reveal on scroll ────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Navbar ──────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .4s, backdrop-filter .4s;
+    }
+
+    nav.scrolled {
+      background: rgba(11,13,16,.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201,162,87,.1);
+    }
+
+    .nav-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      letter-spacing: .15em;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* ─── Confetti burst (decorative dots) ──────────────────────────── */
+    .burst {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: burstAnim 1s ease forwards;
+    }
+
+    @keyframes burstAnim {
+      0%   { transform: scale(0); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Partículas de fondo -->
+  <canvas id="particles"></canvas>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <span class="nav-brand">David & Sandra · 40</span>
+  </nav>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero">
+    <div class="hero-age">40</div>
+    <div class="hero-sub">años de vida bien vivida</div>
+    <div class="hero-names"><span>David</span> &amp; <span>Sandra</span></div>
+    <div class="hero-divider"></div>
+    <p class="hero-intro">
+      Cuarenta años merecen un regalo a la altura.<br/>
+      Así que vuestros amigos hemos preparado algo especial para celebrarlo juntos.
+    </p>
+    <div class="scroll-cta" onclick="document.getElementById('regalo').scrollIntoView({behavior:'smooth'})">
+      <span>Descubre el regalo</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ EL REGALO ══════════ -->
+  <section class="gift-section" id="regalo">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Vuestro regalo</span>
+        <h2 class="section-title">Una escapada <em>especial</em><br/>para celebrar por todo lo alto</h2>
+      </div>
+      <div class="gift-grid">
+        <div class="gift-text reveal">
+          <p>
+            Cuarenta años de los dos merecen mucho más que una tarjeta de felicitación.
+            Por eso, entre todos, hemos decidido regalaros algo que podamos disfrutar
+            juntos: una noche en un hotel increíble frente al mar, en media pensión,
+            con buena comida, risas y recuerdos que durarán otros cuarenta años.
+          </p>
+          <p>
+            El plan es sencillo: llegar, desconectar, disfrutar. La única obligación
+            que tendréis ese fin de semana será pasarlo bien, que de eso ya nos
+            encargamos el resto.
+          </p>
+        </div>
+
+        <div class="gift-card reveal">
+          <span class="gift-card-icon">🎁</span>
+          <div class="gift-card-date">20 de Junio<br/>2026</div>
+          <div class="gift-card-detail">La fecha señalada</div>
+          <div class="gift-card-sep"></div>
+          <div class="gift-card-hotel">Hotel Riviera<br/>Santa Susanna</div>
+          <div class="gift-card-badge">Media Pensión · 1 Noche</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ EL HOTEL ══════════ -->
+  <section class="hotel-section" id="hotel">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">El destino</span>
+        <h2 class="section-title">Hotel Riviera,<br/><em>Santa Susanna</em></h2>
+      </div>
+
+      <div class="hotel-photo-wrap reveal">
+        <img
+          src="https://www.atrapalo.com/hoteles/picture/l/35/3/0/440968942.jpg"
+          alt="Hotel Riviera Santa Susanna"
+          onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#1a1e26,#0d1117)'"
+        />
+        <div class="hotel-photo-overlay"></div>
+        <div class="hotel-photo-caption">
+          <h3>Hotel Riviera · 4 estrellas</h3>
+          <p>Santa Susanna, Costa del Maresme · Barcelona</p>
+        </div>
+      </div>
+
+      <div class="hotel-features reveal">
+        <div class="hotel-feature">
+          <span class="hotel-feature-icon">🌊</span>
+          <div class="hotel-feature-title">Frente al mar</div>
+          <div class="hotel-feature-desc">A pocos pasos de la playa de Santa Susanna</div>
+        </div>
+        <div class="hotel-feature">
+          <span class="hotel-feature-icon">🍽️</span>
+          <div class="hotel-feature-title">Media pensión</div>
+          <div class="hotel-feature-desc">Desayuno y cena incluidos para todos</div>
+        </div>
+        <div class="hotel-feature">
+          <span class="hotel-feature-icon">♟️</span>
+          <div class="hotel-feature-title">Piscina & relax</div>
+          <div class="hotel-feature-desc">Instalaciones para disfrutar sin prisas</div>
+        </div>
+        <div class="hotel-feature">
+          <span class="hotel-feature-icon">🗺️</span>
+          <div class="hotel-feature-title">Costa Maresme</div>
+          <div class="hotel-feature-desc">Entre Barcelona y la Costa Brava</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FOTOS ══════════ -->
+  <section class="photos-section" id="fotos">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Los protagonistas</span>
+        <h2 class="section-title">Los que lo hacen<br/><em>especial</em></h2>
+      </div>
+
+      <div class="photos-grid" style="grid-template-columns: 1fr;">
+        <div class="photo-card reveal" style="aspect-ratio: 16/9;">
+          <img src="foto.jpeg" alt="Todos juntos" style="display: block;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ QUIÉNES VENIMOS ══════════ -->
+  <section class="crew-section" id="crew">
+    <div class="container" style="text-align: center;">
+      <div class="reveal">
+        <span class="section-label">El plan</span>
+        <h2 class="section-title">Un fin de semana<br/><em>entre amigos</em></h2>
+      </div>
+
+      <p class="reveal" style="max-width: 560px; margin: 2rem auto 0; font-size:.9rem; line-height:1.9; color: var(--text); font-weight:300;">
+        No es un escapada solo para dos. Venimos todos, que para eso somos amigos
+        desde hace mil años. Junto a David, Sandra e Iria, estaremos:
+      </p>
+
+      <div class="crew-grid reveal">
+        <div class="crew-chip special">✨ David</div>
+        <div class="crew-chip special">✨ Sandra</div>
+        <div class="crew-chip special">🌟 Iria</div>
+        <div class="crew-chip">Jorge</div>
+        <div class="crew-chip">Marta</div>
+        <div class="crew-chip">Sofía</div>
+        <div class="crew-chip">Saray</div>
+        <div class="crew-chip">Luis</div>
+        <div class="crew-chip">Olivia</div>
+      </div>
+
+      <p class="crew-note reveal">
+        Un fin de semana de risas, buena comida y recuerdos que no se olvidan.<br/>
+        Porque hay celebraciones que son demasiado grandes para vivirlas solo.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer>
+    <span class="footer-heart">🥂</span>
+    <div class="footer-title">Con todo nuestro cariño</div>
+    <div class="footer-line"></div>
+    <div class="footer-from">Jorge · Marta · Sofía · Saray · Luis · Olivia</div>
+    <div class="footer-line"></div>
+    <div class="footer-copy">¡Felices 40, David & Sandra! &nbsp;·&nbsp; Junio 2026</div>
+  </footer>
+
+  <script>
+    /* ─── Partículas flotantes ──────────────────────────────────────── */
+    (function () {
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext('2d');
+      let W, H, dots = [];
+
+      function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+
+      function randomDot() {
+        return {
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.2 + .3,
+          dx: (Math.random() - .5) * .25,
+          dy: (Math.random() - .5) * .25,
+          alpha: Math.random() * .35 + .05
+        };
+      }
+
+      function init() {
+        resize();
+        dots = Array.from({ length: 120 }, randomDot);
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        dots.forEach(d => {
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(201,162,87,${d.alpha})`;
+          ctx.fill();
+          d.x += d.dx;
+          d.y += d.dy;
+          if (d.x < 0 || d.x > W) d.dx *= -1;
+          if (d.y < 0 || d.y > H) d.dy *= -1;
+        });
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      init();
+      draw();
+    })();
+
+    /* ─── Navbar scroll ─────────────────────────────────────────────── */
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* ─── Reveal on scroll ──────────────────────────────────────────── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ─── Confetti on click (por si se animan a celebrar) ──────────── */
+    document.addEventListener('click', function (e) {
+      const colors = ['#c9a257','#e8c97a','#fff5d6','#3a7ca5','#f5f0ea'];
+      for (let i = 0; i < 10; i++) {
+        const el = document.createElement('div');
+        const size = Math.random() * 8 + 4;
+        el.className = 'burst';
+        el.style.cssText = `
+          left:${e.clientX - size/2}px;
+          top:${e.clientY - size/2}px;
+          width:${size}px;
+          height:${size}px;
+          background:${colors[Math.floor(Math.random()*colors.length)]};
+          position:fixed;z-index:9999;
+          transform:translate(${(Math.random()-0.5)*80}px,${(Math.random()-0.5)*80}px) scale(0);
+          animation: burstAnim ${.5 + Math.random()*.5}s ease forwards;
+        `;
+        document.body.appendChild(el);
+        el.addEventListener('animationend', () => el.remove());
+      }
+    });
+  </script>
+</body>
+</html>
